@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+  app1:
+    build: ./source
+    container_name: park-app1
+    networks:
+      net1:
+        aliases:
+          - app
+    environment:
+      APP_ENV: local
+      APP_URL: http://parking.test
+      APP_KEY: "base64:2DAXSUoSZnrkAr595d65Iu0QEu5B/aIc4prz9CvYvkM="
+      APP_TIMEZONE: "Asia/Jakarta"
+      TZ: "Asia/Jakarta"
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: parking_db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    volumes:
+      - app1_data:/var/www/html
+    command: sh -c "php artisan storage:link && php-fpm"
+
+  nginx1:
+    image: nginx:latest
+    container_name: park-nginx1
+    ports:
+      - "8001:80"
+    networks:
+      - net1
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # FIX: Nginx ikut ngintip Kantong Bersama 1
+      - app1_data:/var/www/html
+
+  app2:
+    build: ./source
+    container_name: park-app2
+    networks:
+      net2:
+        aliases:
+          - app
+    environment:
+      APP_ENV: local
+      APP_URL: http://parking.test
+      APP_KEY: "base64:2DAXSUoSZnrkAr595d65Iu0QEu5B/aIc4prz9CvYvkM="
+      APP_TIMEZONE: "Asia/Jakarta"
+      TZ: "Asia/Jakarta"
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: parking_db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    volumes:
+      # FIX: Pakai Kantong Bersama 2
+      - app2_data:/var/www/html
+    command: sh -c "php artisan storage:link && php-fpm"
+
+  nginx2:
+    image: nginx:latest
+    container_name: park-nginx2
+    ports:
+      - "8002:80"
+    networks:
+      - net2
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - app2_data:/var/www/html
+
+  app3:
+    build: ./source
+    container_name: park-app3
+    networks:
+      net3:
+        aliases:
+          - app
+    environment:
+      APP_ENV: local
+      APP_URL: http://parking.test
+      APP_KEY: "base64:2DAXSUoSZnrkAr595d65Iu0QEu5B/aIc4prz9CvYvkM="
+      APP_TIMEZONE: "Asia/Jakarta"
+      TZ: "Asia/Jakarta"
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: parking_db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    volumes:
+      - app3_data:/var/www/html
+    command: sh -c "php artisan storage:link && php-fpm"
+
+  nginx3:
+    image: nginx:latest
+    container_name: park-nginx3
+    ports:
+      - "8003:80"
+    networks:
+      - net3
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - app3_data:/var/www/html
+
+  db:
+    image: mysql:8.0
+    container_name: park-db
+    environment:
+      TZ: "Asia/Jakarta"
+      MYSQL_DATABASE: parking_db
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+      - /home/han/park/source/parkir.sql:/docker-entrypoint-initdb.d/parkir.sql
+    networks:
+      - net1
+      - net2
+      - net3
+
+networks:
+  net1:
+  net2:
+  net3:
+
+volumes:
+  db_data:
+  app1_data:
+  app2_data:
+  app3_data:
