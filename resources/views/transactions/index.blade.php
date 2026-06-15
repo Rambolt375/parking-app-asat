@@ -435,7 +435,8 @@
             return;
         }
 
-        fetch('{{ route("transactions.enter") }}', {
+        // AMAN: Menggunakan Jalur Relatif
+        fetch('/transaction/enter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -453,13 +454,11 @@
                 updateAvailability(data.id_lokasi, data.jenis_key, data.remaining);
                 addTicketToSidebar(data.no_tiket, data.masuk);
 
-                // Completely empty forms
                 document.getElementById('inputTicketNumber').value = '';
                 document.getElementById('inputPoliceNumber').value = '';
                 document.getElementById('inputTicketNumber').parentElement.className = 'input-wrapper inactive';
                 document.getElementById('inputPoliceNumber').parentElement.className = 'input-wrapper inactive';
 
-                // Turn off highlights on choices
                 document.querySelectorAll('.location-card').forEach(card => card.classList.remove('active'));
                 document.querySelectorAll('.vehicle-btn').forEach(btn => {
                     btn.style.border = '2px solid transparent';
@@ -521,7 +520,8 @@
             return;
         }
 
-        fetch('{{ route("transactions.exit") }}', {
+        // AMAN: Menggunakan Jalur Relatif
+        fetch('/transaction/exit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -590,7 +590,8 @@
             emptyState.remove();
         }
 
-        const pdfUrl = '{{ url("transaction/pdf") }}/' + noTiket;
+        // AMAN: Menggunakan Jalur Relatif
+        const pdfUrl = '/transaction/pdf/' + noTiket;
 
         const item = document.createElement('div');
         item.className = 'ticket-item';
@@ -623,8 +624,6 @@
         }
     }
 
-    // Fills form with selected sidebar value
-    // Leaves plate input clean for manual user typing
     function fillTicketNumber(noTiket) {
         document.getElementById('inputTicketNumber').value = noTiket;
         document.getElementById('inputTicketNumber').parentElement.className = 'input-wrapper active';
@@ -643,7 +642,8 @@
         const modal = document.getElementById('modalViewAll');
         modal.classList.add('show');
 
-        fetch('{{ route("transactions.all") }}')
+        // AMAN: Menggunakan Jalur Relatif
+        fetch('/transaction/all-data')
         .then(res => res.json())
         .then(data => {
             const tbody = document.getElementById('allTransactionsBody');
@@ -654,7 +654,8 @@
 
             tbody.innerHTML = '';
             data.transactions.forEach((t, i) => {
-                const pdfUrl = '{{ url("transaction/pdf") }}/' + t.no_tiket;
+                // AMAN: Menggunakan Jalur Relatif
+                const pdfUrl = '/transaction/pdf/' + t.no_tiket;
                 tbody.innerHTML += `
                     <tr>
                         <td>${i + 1}.</td>
@@ -704,4 +705,3 @@
     });
 </script>
 @endpush
-@endsection
