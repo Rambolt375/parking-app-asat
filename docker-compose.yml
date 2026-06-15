@@ -114,7 +114,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - db_data:/var/lib/mysql
-      - /home/han/park/source/parkir.sql:/docker-entrypoint-initdb.d/parkir.sql
+      - ./parkir.sql:/docker-entrypoint-initdb.d/parkir.sql
     networks:
       - net1
       - net2
