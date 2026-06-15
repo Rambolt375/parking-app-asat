@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app1:
-    build: ./source
+    build: .
     container_name: park-app1
     networks:
       net1:
@@ -37,7 +37,7 @@ services:
       - app1_data:/var/www/html
 
   app2:
-    build: ./source
+    build: .
     container_name: park-app2
     networks:
       net2:
@@ -72,7 +72,7 @@ services:
       - app2_data:/var/www/html
 
   app3:
-    build: ./source
+    build: .
     container_name: park-app3
     networks:
       net3:
