@@ -10,7 +10,8 @@ services:
           - app
     environment:
       APP_ENV: local
-      APP_URL: http://parking.test
+      APP_URL: https://parking-17.com
+      ASSET_URL: https://parking-17.com
       APP_KEY: "base64:2DAXSUoSZnrkAr595d65Iu0QEu5B/aIc4prz9CvYvkM="
       APP_TIMEZONE: "Asia/Jakarta"
       TZ: "Asia/Jakarta"
@@ -33,7 +34,6 @@ services:
       - net1
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      # FIX: Nginx ikut ngintip Kantong Bersama 1
       - app1_data:/var/www/html
 
   app2:
@@ -45,7 +45,8 @@ services:
           - app
     environment:
       APP_ENV: local
-      APP_URL: http://parking.test
+      APP_URL: https://parking-17.com
+      ASSET_URL: https://parking-17.com
       APP_KEY: "base64:2DAXSUoSZnrkAr595d65Iu0QEu5B/aIc4prz9CvYvkM="
       APP_TIMEZONE: "Asia/Jakarta"
       TZ: "Asia/Jakarta"
@@ -80,7 +81,8 @@ services:
           - app
     environment:
       APP_ENV: local
-      APP_URL: http://parking.test
+      APP_URL: https://parking-17.com
+      ASSET_URL: https://parking-17.com
       APP_KEY: "base64:2DAXSUoSZnrkAr595d65Iu0QEu5B/aIc4prz9CvYvkM="
       APP_TIMEZONE: "Asia/Jakarta"
       TZ: "Asia/Jakarta"
