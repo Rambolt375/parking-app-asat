@@ -654,7 +654,6 @@
 
             tbody.innerHTML = '';
             data.transactions.forEach((t, i) => {
-                // AMAN: Menggunakan Jalur Relatif
                 const pdfUrl = '/transaction/pdf/' + t.no_tiket;
                 tbody.innerHTML += `
                     <tr>
